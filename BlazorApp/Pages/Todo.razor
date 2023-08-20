@@ -1,0 +1,50 @@
+﻿@page "/todo"
+@using BlazorApp.Data
+@inject TodoService todoService
+
+<PageTitle>Todo</PageTitle>
+
+<h1>Todo List</h1>
+<h4>Incomplete (@todoService.Todos.Count(todo => !todo.IsDone)) | Completed (@todoService.Todos.Count(todo => todo.IsDone))</h4>
+
+<ul>
+    @foreach (var todoItem in todoService.Todos)
+    {
+        <li>
+            <div class="d-flex flex-row gap-2 align-items-center justify-content-start">
+                <div class="card flex-row gap-2">
+                    <label>Due Date</label>
+                    <input type="date" @bind="todoItem.Date" />
+                    <br />
+                    <label>Task</label>
+                    <input @bind="todoItem.Title" />
+                    <hr />
+                    <span class="form-check form-check-inline">
+                        <label>Mark Complete</label>
+                        <input type="checkbox" @bind="todoItem.IsDone" />
+                    </span>
+                </div>
+            </div>
+        </li>
+    }
+</ul>
+
+<input placeholder="Ex. Choose hotel" @bind="newTodo" />
+<button type="button" class="btn btn-primary" @onclick="AddTodo">Add Todo</button>
+
+@code {
+    private string? newTodo;
+
+    private void AddTodo()
+    {
+        if (!string.IsNullOrWhiteSpace(newTodo))
+        {
+            var todoItem = new TodoItem { 
+                Title = newTodo,
+                    Date = DateOnly.FromDateTime(DateTime.Today), // Set the date to today if a date isn't explicitly set
+            };
+            todoService.AddTodoItem(todoItem);
+            newTodo = string.Empty;
+        }
+    }
+}

@@ -1,0 +1,57 @@
+﻿@page "/profile"
+@using BlazorApp.Data
+@using Microsoft.AspNetCore.Components.Web
+@inject NavigationManager NavigationManager
+@inject ProfileService UserProfileService
+
+<PageTitle>Profile</PageTitle>
+
+@if (!editing)
+{
+    <h2>Welcome @UserProfileService.UserName!</h2>
+    <p>Your desired travel destination: @UserProfileService.Destination</p>
+    <button class="btn btn-primary" @onclick="EditProfile">Edit Profile</button>
+}
+else
+{
+    <div>
+        <label for="editName">Name:</label>
+        <input id="editName" @bind="editName" />
+    </div>
+    <div>
+        <label for="editDestination">Destination:</label>
+        <input id="editDestination" @bind="editDestination" />
+    </div>
+    <button class="btn btn-success" @onclick="SaveChanges">Save</button>
+}
+
+@code {
+    private bool editing;
+    private string? editName;
+    private string? editDestination;
+    private string userName = "";
+    private string destination = "";
+
+    private void SaveUserInput()
+    {
+        UserProfileService.UserName = userName;
+        UserProfileService.Destination = destination;
+    }
+
+    protected override void OnInitialized()
+    {
+        editName = UserProfileService.UserName;
+        editDestination = UserProfileService.Destination;
+    }
+
+    private void EditProfile() => editing = true;
+    
+
+
+    private void SaveChanges()
+    {
+        UserProfileService.UserName = editName;
+        UserProfileService.Destination = editDestination;
+        editing = false;
+    }
+}
