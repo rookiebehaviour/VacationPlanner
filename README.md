@@ -1,6 +1,6 @@
 # Vacation Planner App
 
-![vacay_plannerapp-home](https://github.com/rookiebehaviour/VacationPlanner/assets/75797321/4d3e71e9-16c3-40b1-aa88-28ee21da290f)
+![vacay_plannerapp-home](https://github.com/rookiebehaviour/VacationPlanner/assets/75797321/90f06b12-0751-4f8d-a27e-b43bce338413)
 
 ###
 
